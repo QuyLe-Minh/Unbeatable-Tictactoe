@@ -1,5 +1,3 @@
-import copy
-from itertools import combinations
 from tkinter import *
 
 class TicTacToe:
@@ -139,20 +137,20 @@ class TicTacToe:
         a = -2000
         b = 2000
 
-        best_outcome = -200
+        bestVal = -200
 
-        best_move = None
+        bestMove = -1
 
         for i in range(9):
             if self.board[i] == " ":
                 self.board[i] = "O"
                 val = self.minimax(self.get_enemy("O"), self.board, a, b)
                 self.board[i] = " "
-                if val > best_outcome:
-                    best_outcome = val
-                    best_move = i
+                if val > bestVal:
+                    bestVal = val
+                    bestMove = i
 
-        self.gamePlay(best_move)
+        self.gamePlay(bestMove)
 
     # The minimax algorithm, with alpha-beta pruning
     def minimax(self, player, board, alpha, beta):
