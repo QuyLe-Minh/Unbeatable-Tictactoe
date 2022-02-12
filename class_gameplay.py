@@ -148,7 +148,6 @@ class TicTacToe:
         
     #     self.gamePlay(bestMove)
     def ai(self):
-        player = "O"
         a = -2000
         b = 2000
 
@@ -163,14 +162,9 @@ class TicTacToe:
                 board_copy[i] = player
                 val = self.minimax(self.get_enemy(player), board_copy, a, b)
                 board_copy[i] = " "
-                if player == "O":
-                    if val > best_outcome:
-                        best_outcome = val
-                        best_move = i
-                else:
-                    if val < best_outcome:
-                        best_outcome = val
-                        best_move = i
+                if val > best_outcome:
+                    best_outcome = val
+                    best_move = i
 
         self.gamePlay(best_move)
 
