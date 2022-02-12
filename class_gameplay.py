@@ -98,48 +98,36 @@ class TicTacToe:
                 return True
         return False
 
-    # def evaluate(self, board):
-    #     for c in self.winning_combinations:
-    #         if board[c[0]] == board[c[1]] and board[c[1]] == board[c[2]] and board[c[0]] != " ":
-    #             if board[c[0]] == "X":
-    #                 return -100
-    #             return 100
-    #     return 0
-
-    # def minimax(self, gameboard, isMax, player):
-    #     board = copy.deepcopy(gameboard)
-    #     score = self.evaluate(board)
-    #     if score == 100 or score == -100:
-    #         return score
-    #     if not self.isLeft(board):
+   #def minimax(self, board, player):
+    #     winner = self.isWin(board)
+    #     if winner == "O":
+    #         return 100
+    #     elif winner == "X":
+    #         return -100
+    #     elif not self.isLeft(board):
     #         return 0
         
-    #     if isMax:
-    #         best = -1000
-    #         for i in range(9):
-    #             if board[i] == " ":
-    #                 board[i] = "O"
-    #                 best = max(best, self.minimax(board, not isMax, self.get_enemy(player)))
-    #                 board[i] = " "
-    #     else:
-    #         best = 1000
-    #         for i in range(9):
-    #             if board[i] == " ":
-    #                 board[i] = "X"
-    #                 best = min(best, self.minimax(board, not isMax, self.get_enemy(player)))
-    #                 board[i] = " "
+    #     best = -1000 if player == "O" else 1000
+    #     for i in range(9):
+    #         if board[i] == " ":
+    #             board[i] = player
+    #             val = self.minimax(board, self.get_enemy(player))
+    #             board[i] = " "
+    #             if player == "O":
+    #                 best = max(best, val)
+    #             else:
+    #                 best = min(best, val)
         
     #     return best
 
-    # def ai(self, board):
-    #     player = "O"
+    # def ai(self):
     #     bestMove = -1
     #     bestVal = -1000
     #     for i in range(9):
-    #         if board[i] == " ":
-    #             board[i] = "O"
-    #             move = self.minimax(board, True, player)
-    #             board[i] = " "
+    #         if self.board[i] == " ":
+    #             self.board[i] = "O"
+    #             move = self.minimax(self.board, self.get_enemy("O"))
+    #             self.board[i] = " "
 
     #             if move > bestVal:
     #                 bestVal = move
@@ -151,17 +139,15 @@ class TicTacToe:
         a = -2000
         b = 2000
 
-        board_copy = copy.deepcopy(self.board)
-
         best_outcome = -200
 
         best_move = None
 
         for i in range(9):
-            if board_copy[i] == " ":
-                board_copy[i] = "O"
-                val = self.minimax(self.get_enemy("O"), board_copy, a, b)
-                board_copy[i] = " "
+            if self.board[i] == " ":
+                self.board[i] = "O"
+                val = self.minimax(self.get_enemy("O"), self.board, a, b)
+                self.board[i] = " "
                 if val > best_outcome:
                     best_outcome = val
                     best_move = i
@@ -170,9 +156,6 @@ class TicTacToe:
 
     # The minimax algorithm, with alpha-beta pruning
     def minimax(self, player, board, alpha, beta):
-        board_copy = copy.deepcopy(board)
-
-        # Check for a win
         winner = self.isWin(board_copy)
 
         if winner == "O":
@@ -182,13 +165,13 @@ class TicTacToe:
         elif not self.isLeft(board_copy):
             return 0
 
-        best_outcome = -200 if player == "O" else 200
+        best_outcome = -1000 if player == "O" else 1000
 
         for i in range(9):
-            if board_copy[i] == " ":
-                board_copy[i] = player
-                val = self.minimax(self.get_enemy(player), board_copy, alpha, beta)
-                board_copy[i] = " "
+            if board[i] == " ":
+                board[i] = player
+                val = self.minimax(self.get_enemy(player), board, alpha, beta)
+                board[i] = " "
                 if player == "O":
                     best_outcome = max(best_outcome, val)
                     alpha = min(alpha, best_outcome)
