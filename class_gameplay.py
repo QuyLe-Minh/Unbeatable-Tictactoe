@@ -159,8 +159,8 @@ class TicTacToe:
 
         for i in range(9):
             if board_copy[i] == " ":
-                board_copy[i] = player
-                val = self.minimax(self.get_enemy(player), board_copy, a, b)
+                board_copy[i] = "O"
+                val = self.minimax(self.get_enemy("O"), board_copy, a, b)
                 board_copy[i] = " "
                 if val > best_outcome:
                     best_outcome = val
